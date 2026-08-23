@@ -37,6 +37,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LIMI Marketplace</title>
+    <link rel="manifest" href="/manifest.json">
+    
     <meta name="google-site-verification" content="oetO7_cw4uwtMEnS6-Pthcs-tPpq-upX3x2JytIHZaw" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
