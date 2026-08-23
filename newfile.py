@@ -583,5 +583,6 @@ def serve_icon_512():
     return send_from_directory('.', 'icon-512.png')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=10000)
+    
     
