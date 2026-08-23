@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, render_template_string
-import requests, send_from_directory
+import requests
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
