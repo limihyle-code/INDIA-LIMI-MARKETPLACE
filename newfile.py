@@ -1,5 +1,5 @@
-from flask import Flask, request, redirect, render_template_string
-import requests
+from flask import Flask, request, redirect, render_template_string, send_from_directory
+
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
@@ -569,3 +569,19 @@ def account():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+# --- PWA Manifest & Icons Routes ---
+@app.route('/manifest.json')
+def serve_manifest():
+    return send_from_directory('.', 'manifest.json')
+
+@app.route('/icon-192.png')
+def serve_icon_192():
+    return send_from_directory('.', 'icon-192.png')
+
+@app.route('/icon-512.png')
+def serve_icon_512():
+    return send_from_directory('.', 'icon-512.png')
+
+if __name__ == '__main__':
+    app.run()
+    
