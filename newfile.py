@@ -69,6 +69,7 @@ HTML_HEADER = """<!DOCTYPE html>
         }
         .splash-tag { font-size: 0.8rem; letter-spacing: 3px; color: var(--app-accent); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; }
         .splash-title { font-size: 2.2rem; font-weight: 900; letter-spacing: -1px; }
+
         .brand-header { background: linear-gradient(135deg, #0b132b 0%, #1c2541 100%); color: white; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 8px 20px rgba(11, 19, 43, 0.2); }
         .ad-card { border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03); background: white; position: relative; }
         .ad-img { height: 140px; object-fit: cover; width: 100%; background-color: #f1f5f9; }
@@ -92,7 +93,6 @@ HTML_HEADER = """<!DOCTYPE html>
         <div class="spinner-border text-success mt-4" style="width: 2.2rem; height: 2.2rem;" role="status"></div>
     </div>
 """
-
 @app.route('/')
 def home():
     listings = get_firebase_listings()
@@ -191,6 +191,7 @@ def home():
         <a href="/my-ads" class="nav-item-custom"><i class="bi bi-journal-text"></i><span data-i18n="nav_ads">My Ads</span></a>
         <a href="/account" class="nav-item-custom"><i class="bi bi-person-circle"></i><span data-i18n="nav_account">Account</span></a>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         window.addEventListener('load', function() {
@@ -278,8 +279,7 @@ def home():
                     const formattedSeconds = s < 10 ? '0' + s : s;
                     const formattedMinutes = m < 10 ? '0' + m : m;
                     el.innerText = `${h}h ${formattedMinutes}m ${formattedSeconds}s`;
-                    
-        }
+                }
             });
         }
         setInterval(updateTimers, 1000);
@@ -287,8 +287,7 @@ def home():
         applyLanguage();
     </script>
 </body></html>""", items=listings, search_query=search_query)
-
-@app.route('/user_profile/<username>')
+    @app.route('/user_profile/<username>')
 def user_profile(username):
     profile = get_user_profile(username)
     reviews = profile.get('reviews', [])
@@ -427,8 +426,7 @@ def update_price():
     except:
         pass
     return redirect('/my-ads')
-
-@app.route('/chats')
+    @app.route('/chats')
 def chats():
     return render_template_string(HTML_HEADER + """
     <div class="brand-header p-3 mb-2"><h4 class="fw-bold m-0">Messages & Calls</h4></div>
@@ -461,7 +459,8 @@ def chats():
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body></html>""")
-    @app.route('/app_call')
+
+@app.route('/app_call')
 def app_call():
     user_name = request.args.get('name', 'User')
     return render_template_string("""<!DOCTYPE html>
@@ -575,8 +574,7 @@ def chat_room():
         }
     </script>
 </body></html>""")
-
-@app.route('/post', methods=['GET', 'POST'])
+    @app.route('/post', methods=['GET', 'POST'])
 def post_ad():
     if request.method == 'POST':
         is_urgent = True if request.form.get('is_urgent') == 'on' else False
@@ -636,6 +634,7 @@ def my_ads():
         </div>
     </div>
     </body></html>""", items=listings)
+
 @app.route('/account')
 def account():
     return render_template_string(HTML_HEADER + """
@@ -704,7 +703,7 @@ def account():
     </script>
 </body></html>""")
 
-# --- PWA CRITICAL ROUTES (MANIFEST, LOGOS & ROBOTS) ---
+# --- PWA CRITICAL ROUTES ---
 @app.route('/manifest.json')
 def manifest():
     return send_from_directory('.', 'manifest.json', mimetype='application/json')
@@ -722,4 +721,5 @@ def robots():
     return send_from_directory('.', 'robots.txt')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)                             
+    app.run(host='0.0.0.0', port=10000)
+        
