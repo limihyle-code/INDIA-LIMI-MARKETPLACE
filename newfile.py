@@ -1,7 +1,6 @@
 from flask import Flask, request, redirect, render_template_string, jsonify
 import requests
 import time
-import os
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
