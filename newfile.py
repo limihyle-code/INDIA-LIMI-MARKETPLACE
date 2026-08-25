@@ -362,8 +362,6 @@ def add_review(username):
     except:
         pass
     return redirect(f"/user_profile/{username}")
-@app.route('/make_offer', methods=['POST'])
-def make_offer():
     @app.route('/send_message', methods=['POST'])
 def send_message():
     data = request.json
@@ -381,7 +379,8 @@ def send_message():
         requests.post(chat_url, json=msg_payload)
         return jsonify({"status": "success"})
     return jsonify({"status": "error"}), 400
-    
+    @app.route('/make_offer', methods=['POST'])
+def make_offer():
     seller_name = request.form.get('seller_name')
     offer_amount = request.form.get('offer_amount')
     
