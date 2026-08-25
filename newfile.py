@@ -13,7 +13,7 @@ FIREBASE_PROFILES_URL = "https://limi-marketplace-default-rtdb.firebaseio.com/pr
 def get_firebase_listings():
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(FIREBASE_URL, headers=headers, timeout=5)
+        response = requests.get(FIREBASE_URL, headers=headers, timeout=3)
         if response.status_code != 200:
             return []
         data = response.json()
@@ -103,7 +103,6 @@ HTML_HEADER = """<!DOCTYPE html>
         </div>
         <div id="google_translate_element" style="display:none;"></div>
     </nav>
-"""
     <style>
         :root { --app-dark: #0b132b; --app-accent: #00e599; --app-blue: #1c2541; --app-light-bg: #f4f6f9; }
         body { background-color: var(--app-light-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding-bottom: 85px; color: #1e293b; }
@@ -125,7 +124,6 @@ HTML_HEADER = """<!DOCTYPE html>
 </head>
 <body>
 """
-
 @app.route('/')
 def home():
     listings = get_firebase_listings()
@@ -358,7 +356,6 @@ def add_review(username):
     reviews = profile.get('reviews', [])
     reviews.append({"reviewer": "Verified Buyer", "rating": int(rating), "comment": comment})
     profile['reviews'] = reviews
-    
     try:
         url = f"https://limi-marketplace-default-rtdb.firebaseio.com/profiles/{username}.json"
         requests.patch(url, json=profile, timeout=5)
