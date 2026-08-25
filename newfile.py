@@ -54,6 +54,56 @@ HTML_HEADER = """<!DOCTYPE html>
     <meta name="google-site-verification" content="oetO7_cw4uwtMEnS6-Pthcs-tPpq-upX3x2JytIHZaw" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 🌐 12+ Multi-Language Engine Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,en,bho,bn,mr,gu,pa,ta,te,kn,ml,ur',
+                autoDisplay: false
+           }, 'google_translate_element');     
+      }
+      function changeLanguage(langCode) {
+           var selectEl = document.querySelector('.goog-te-combo');
+           if (selectEl) {
+               selectEl.value = langCode;
+               selectEl.dispatchEvent(new Event('change'));
+           }    
+       }  
+    </script>
+   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+   </head>
+<body class="bg-light">
+
+    <!-- Top Navigation Bar with Language Switcher -->
+    <nav class="navbar navbar-dark bg-dark px-3 shadow-sm">
+        <a class="navbar-brand fw-bold" href="/">LIMI Marketplace</a>
+        
+        <!-- 🌐 Language Dropdown Menu -->
+        <div class="dropdown">
+            <button class="btn btn-sm btn-outline-light dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown">
+                🌐 Language
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('hi')">🇮🇳 Hindi (हिंदी)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('en')">🇬🇧 English</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('bho')">🇮🇳 Bhojpuri (भोजपुरी)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('bn')">🇮🇳 Bengali (বাংলা)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('mr')">🇮🇳 Marathi (मराठी)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('gu')">🇮🇳 Gujarati (ગુજરાતી)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('pa')">🇮🇳 Punjabi (પંજાબી)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('ta')">🇮🇳 Tamil (தமிழ்)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('te')">🇮🇳 Telugu (తెలుగు)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('kn')">🇮🇳 Kannada (કન્નડ)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('ml')">🇮🇳 Malayalam (മലയാളം)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeLanguage('ur')">🇮🇳 Urdu (اردو)</a></li>
+            </ul>
+        </div>
+        <div id="google_translate_element" style="display:none;"></div>
+    </nav>
+"""
     <style>
         :root { --app-dark: #0b132b; --app-accent: #00e599; --app-blue: #1c2541; --app-light-bg: #f4f6f9; }
         body { background-color: var(--app-light-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding-bottom: 85px; color: #1e293b; }
@@ -317,6 +367,24 @@ def add_review(username):
     return redirect(f"/user_profile/{username}")
 @app.route('/make_offer', methods=['POST'])
 def make_offer():
+    @app.route('/send_message', methods=['POST'])
+def send_message():
+    data = request.json
+    room_id = data.get('room_id')
+    sender = data.get('sender')
+    message = data.get('message')
+    
+    if room_id and message:
+        chat_url = f"https://limi-marketplace-default-rtdb.firebaseio.com/chats/{room_id}.json"
+        msg_payload = {
+            "sender": sender,
+            "message": message,
+            "timestamp": int(time.time())
+        }
+        requests.post(chat_url, json=msg_payload)
+        return jsonify({"status": "success"})
+    return jsonify({"status": "error"}), 400
+    
     seller_name = request.form.get('seller_name')
     offer_amount = request.form.get('offer_amount')
     
