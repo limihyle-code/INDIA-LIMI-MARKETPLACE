@@ -13,7 +13,7 @@ FIREBASE_PROFILES_URL = "https://limi-marketplace-default-rtdb.firebaseio.com/pr
 def get_firebase_listings():
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(FIREBASE_URL, headers=headers, timeout=10)
+        response = requests.get(FIREBASE_URL, headers=headers, timeout=5)
         if response.status_code != 200:
             return []
         data = response.json()
