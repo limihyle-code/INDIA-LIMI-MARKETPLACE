@@ -37,7 +37,7 @@ def get_firebase_listings():
 def get_user_profile(username):
     try:
         url = f"https://limi-marketplace-default-rtdb.firebaseio.com/profiles/{username}.json"
-        res = requests.get(url, timeout=1)
+        res = requests.get(url, timeout=5)
         if res.status_code == 200 and res.json():
             return res.json()
     except:
@@ -468,7 +468,7 @@ def video_call():
 <body>
     <video id="local" autoplay playsinline poster="https://via.placeholder.com/400x800?text=Video+Call..."></video>
     <div style="position:absolute; bottom:30px; left:0; right:0; text-align:center;">
-        <a href="/chats" class="btn btn-danger rounded-circle p-3"><i class="bi bi-telephone-x-fill fs-3"></i></a>
+        <a href="/video_call?name=""" + user_name + """" class="text-white"><i class="bi bi-camera-video-fill"></i></a>
     </div>
     <script>navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(s=>document.getElementById('local').srcObject=s);</script>
 </body></html>""")
