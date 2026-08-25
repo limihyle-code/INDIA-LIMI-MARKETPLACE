@@ -37,7 +37,7 @@ def get_firebase_listings():
 def get_user_profile(username):
     try:
         url = f"https://limi-marketplace-default-rtdb.firebaseio.com/profiles/{username}.json"
-        res = requests.get(url, timeout=2)
+        res = requests.get(url, timeout=1)
         if res.status_code == 200 and res.json():
             return res.json()
     except:
